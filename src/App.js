@@ -11,18 +11,20 @@ const App = () => {
   const timeoutRef = useRef(null);
 
   const startGame = () => {
-    setReactionTime(null);
+      setReactionTime(null);
+    setGame("waiting")
+    setMessage(null); 
+  
 
     
     const random = Math.floor(Math.random() * 5000) + 1000;
-
-    timeoutRef.current = setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         setGame("green");
-    
-      startTimeRef.current = new Date();
+       startTimeRef.current = new Date();
     }, random);
 
     setGame("red");
+    
   };
 
   const handleClick = () => {
@@ -37,18 +39,19 @@ const App = () => {
       const reactionTime = endTime - startTimeRef.current;
       setReactionTime(reactionTime);
      setMessage(`You took ${reactionTime}ms!`)
+     setGame("waiting");
     }
-    
   };
 
   return (
     <div className='contanier'>
       <h1>Reaction Time Test</h1>
       <br/>
-      {game === "waiting" || game === "too early" || game === "success" ? (
+      {game === "waiting" || game === "too early" || game === "null" ? (
         <>
         <button className="btn btn-success button"  onClick={startGame}>Start Game</button>
         {game === "too early" && <h2>{message}</h2>}
+       
       </>
       ) : (
         <div
